@@ -9,9 +9,9 @@ rankall <- function(outcome, num = 'best'){
   states = sort(unique(data$State))
   
   hospital_names = vector(length=54)
-  hospital_df = data.frame(State = character(), Hospital.Name = character())
+  hospital_df = data.frame()
   
-  if (num == 'best'){
+  if (num == 1){
     for (i in 1:length(states)){
       hospital_names[i] = best(states[i], outcome)
     }
@@ -29,7 +29,7 @@ rankall <- function(outcome, num = 'best'){
   else {
     for (i in 1:length(states)){
       data_monitor = subset(data, data[,7] == states[i])
-      data_monitor[outcome] = as.numeric(unlist(data_monitor[outcome]))
+      #data_monitor[outcome] = as.numeric(unlist(data_monitor[outcome]))
       data_monitor_sort = data_monitor[order(data_monitor[outcome], data_monitor[,2]),]
       
       hospital_names[i] = data_monitor_sort$Hospital.Name[num]

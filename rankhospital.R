@@ -7,6 +7,8 @@ rankhospital <- function(state, outcome, num='best'){
   data['heart attack'] = data$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
   data['heart failure'] = data$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
   data['pneumonia'] = data$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+  hospital_df = data.frame()
+  
   if(state %in% states == FALSE){
     stop('invalid state')
   }
@@ -27,12 +29,16 @@ rankhospital <- function(state, outcome, num='best'){
     data1 = subset(data, data[ ,7] == state)
     
     #data1[outcome] = as.numeric(data1[outcome])
+    
     data1[outcome] = as.numeric(unlist(data1[outcome]))
+    
     data_sort = data1[order(data1[outcome], data1[,2]),]
     
     hospital_name = data_sort$Hospital.Name[num]
   }
-  return(hospital_name)
+  hospital_df = data.frame(Rank = num, Hospital.Name = hospital_name)
+  
+  return(hospital_df)
 }
 
 
